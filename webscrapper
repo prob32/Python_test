@@ -1,0 +1,20 @@
+from bs4 import BeautifulSoup, SoupStrainer
+from urllib.request import urlopen
+import csv
+from datetime import datetime	
+import requests
+import httplib2
+http = httplib2.Http()
+status, response = http.request('https://www.coopathome.ch/en/')
+soup=BeautifulSoup(response, 'html.parser', parse_only =SoupStrainer('a'))
+def links():
+	for link in soup:
+		if link.has_attr('href'):
+			print(link['href'])
+data= []
+data.append((links))
+with open('test.csv','a') as csv_file:
+	writer= csv.writer(csv_file)
+	for url in data:
+		writer.writerow([links])
+		writer.writerow('')
